@@ -1,6 +1,6 @@
 import java.io.File
 import java.io.FileNotFoundException
-
+// not using regex
 val digits_map: Map<String, Char> =
         mapOf(
                 "zero" to '0',
@@ -41,19 +41,23 @@ fun process_lines(file: File): Int {
 
                 // intialize start and end pointer
 
-                var current_line = line.lowercase()
+                var current_line =
+                        line.lowercase()
+                                .replace("nineight", "98")
+                                .replace("sevenine", "79")
+                                .replace("fiveight", "58")
+                                .replace("eighthree", "83")
+                                .replace("eightwo", "82")
+                                .replace("zerone", "01")
+                                .replace("oneight", "18")
+                                .replace("threeight", "38")
+                                .replace("twone", "21")
                 for (item in digits_map.entries) {
-                    val sub_string = item.key.substring(0, item.key.length - 1)
                     if (item.key in current_line) {
                         current_line = current_line.replace(item.key, item.value.toString())
-
-                        //    print("sub ${sub_string}")
-
-                    } else if (sub_string in current_line) {
-                        current_line = current_line.replace(sub_string, item.value.toString())
                     }
                 }
-                print("${current_line}: ")
+                print("${line}: ")
 
                 var start: Char? = null
                 var end: Char? = null
